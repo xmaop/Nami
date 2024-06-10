@@ -18,30 +18,27 @@
  */
 /**
  * @fileoverview Base response class.
- *
- * @author Marcelo Gornstein - http://marcelog.github.com
- * Website: http://marcelog.github.com/Nami
  */
-message = require(__dirname + '/message.js');
-util = require('util');
+
+const { Message } = require(__dirname + '/message.js');
 
 /**
  * Base response class.
- * @constructor
- * @param {String} data A message received from AMI. The End-Of-Message indicator
- * has to be already stripped out. This will call unserialize() to build the actual
- * Message object.
- * @see Message(String)
- * @see Message#unmarshall(String)
- * @augments Message
- * @property {Event[]} events Events related to this response (can be empty).
+ * @extends Message
  */
-function Response(data) {
-	Response.super_.call(this);
-    this.unmarshall(data);
-    this.events = [];
+class Response extends Message {
+    /**
+     * @constructor
+     * @param {String} data A message received from AMI. The End-Of-Message indicator
+     * has to be already stripped out. This will call unserialize() to build the actual
+     * Message object.
+     * @property {Event[]} events Events related to this response (can be empty).
+     */
+    constructor(data) {
+        super();
+        this.unmarshall(data);
+        this.events = [];
+    }
 }
-util.inherits(Response, message.Message);
-exports.Response = Response;
 
-
+module.exports = { Response };
